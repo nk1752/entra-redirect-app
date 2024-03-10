@@ -1,6 +1,5 @@
-'use client';
-
-import { useState } from 'react';
+import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import Topbar from '../components/topbar';
 import { User } from '../interfaces/User';
 import getUserProfileByEmail from '../lib/getUserProfileByEmail';
@@ -13,22 +12,24 @@ let user: User = {
   status: 0,
 };
 
-export default function GraphPage() {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-
-  async function searchUserProfileByEmail() {
-    getUserProfileByEmail(email)
-      .then((res) => {
-        user = res;
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {});
+export default async function graphPage() {
+  async function searchUserProfileByEmail(formData: FormData) {
+    'use server';
+    const input = formData.get('email') as string;
+    getUserProfileByEmail(input)
+    .then((res) => {
+      user = res;
+      revalidatePath('/userGraph');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      revalidatePath('/userGraph');
+    });
+    
+    revalidatePath('/userGraph');
+    
   }
 
   return (
@@ -54,7 +55,6 @@ export default function GraphPage() {
               name="firstName"
               defaultValue={user.firstName}
               style={{ width: '100%' }}
-              // get first name from user object
             />
           </label>
 
@@ -81,9 +81,6 @@ export default function GraphPage() {
               name="email"
               placeholder="1st part of email"
               style={{ width: '100%' }}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
             />
           </label>
           <button

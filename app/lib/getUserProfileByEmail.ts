@@ -1,3 +1,4 @@
+'use server';
 import { cookies } from 'next/headers';
 
 import { User } from '../interfaces/User';
@@ -24,7 +25,6 @@ export default async function getUserProfileByEmail(input: string) {
     headers: {
       'Content-Type': 'application/json',
       ConsistencyLevel: 'eventual',
-
       Authorization: `Bearer ${accessToken}`,
     },
   });
