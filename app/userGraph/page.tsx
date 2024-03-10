@@ -2,10 +2,7 @@ import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import Topbar from '../components/topbar';
 import { User } from '../interfaces/User';
-
-let firstName: string;
-let lastName: string;
-let id: string;
+import getUserProfileByEmail from '../lib/getUserProfileByEmail';
 
 let user: User = {
   firstName: '',
@@ -16,41 +13,10 @@ let user: User = {
 };
 
 export default async function graphPage() {
-  async function getUserProfileByEmail(formData: FormData) {
+  async function searchUserProfileByEmail(formData: FormData) {
     'use server';
     const input = formData.get('email') as string;
-    //console.log('email >>>> ', input);
-
-    const url =
-      'https://graph.microsoft.com/v1.0/users/' + input + '@pocvivahealth.com';
-    //const url = 'https://graph.microsoft.com/v1.0/users/';
-
-    const accessTokenCookie = cookies().get('accessToken');
-    const accessToken = accessTokenCookie?.value;
-
-    //console.log('accessToken cookie >>>> ', accessToken);
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ConsistencyLevel: 'eventual',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-
-      user = {
-        firstName: data.givenName,
-        lastName: data.surname,
-        email: data.userPrincipalName,
-        id: data.id,
-        status: data.status,
-      };
-      console.log('user >>>> ', user);
-    }
+    user = await getUserProfileByEmail(input);
 
     revalidatePath('/userGraph');
   }
@@ -62,7 +28,7 @@ export default async function graphPage() {
       <div className=" flex flex-col gap-10 items-center content-center justify-center ">
         {/* email */}
         <form
-          action={getUserProfileByEmail}
+          action={searchUserProfileByEmail}
           className="flex flex-col bg-gray-700 max-h-96 p-4 border-4 text-stone-100 gap-4"
         >
           <h3 className="text-2xl font-bold">Get User By Email</h3>

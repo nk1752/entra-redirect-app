@@ -1,11 +1,11 @@
 
 import Topbar from './components/topbar';
-import getUserProfile from './lib/getUserProfile';
+import getCurrentUserProfile from './lib/getCurrentUserProfile';
 import { User } from './interfaces/User';
 
 export default async function Home() {
 
-  const user: User = await getUserProfile();
+  const user: User = await getCurrentUserProfile();
   
   if (user.status === 200) {
     console.log('user >>>> ', user);

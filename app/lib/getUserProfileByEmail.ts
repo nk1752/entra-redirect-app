@@ -1,9 +1,18 @@
 import { cookies } from 'next/headers';
+
 import { User } from '../interfaces/User';
 
-export default async function getUserProfile() {
-  const url = 'https://graph.microsoft.com/v1.0/me/';
-  let user: User;
+let user: User = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  id: '',
+  status: 0,
+};
+
+export default async function getUserProfileByEmail(input: string) {
+  const url = 'https://graph.microsoft.com/v1.0/users/'+input+'@pocvivahealth.com';
+  
   const accessTokenCookie = cookies().get('accessToken');
   const accessToken = accessTokenCookie?.value;
 
@@ -22,6 +31,7 @@ export default async function getUserProfile() {
 
   if (response.ok) {
     const data = await response.json();
+
     user = {
       firstName: data.givenName,
       lastName: data.surname,
@@ -29,14 +39,7 @@ export default async function getUserProfile() {
       id: data.id,
       status: 200,
     };
-  } else {
-    user = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      id: '',
-      status: response.status,
-    };
+    console.log('user >>>> ', user);
   }
 
   return user;

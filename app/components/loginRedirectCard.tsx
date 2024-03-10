@@ -2,24 +2,18 @@
 
 import { InteractionType } from '@azure/msal-browser';
 import { MsalAuthenticationTemplate, useMsal } from '@azure/msal-react';
+import { loginRequest } from '@/utils/authConfig';
 
 export default function LoginRedirectCard() {
-  const config = {
-    auth: {
-      clientId: 'abee947b-4651-4e65-84da-a36c618f3693',
-      redirectUri: '/', //defaults to application start page
-      postLogoutRedirectUri: '/',
-    },
-  };
-
   const { instance, accounts, inProgress } = useMsal();
-  const loginRequest = {
-    scopes: ['User.Read'],
-  };
 
   // handle login
   function handleLogin() {
-    const result = instance.loginRedirect(loginRequest);
+    instance
+    .loginRedirect(loginRequest)
+    .then((response) => {
+      console.log('loginRedirect response: ', response);
+    })
   }
 
   return (
