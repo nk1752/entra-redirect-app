@@ -1,0 +1,35 @@
+name: generate variables
+on:
+  workflow_call:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: false
+        type: string
+        
+
+env:
+  ACR_RG: poc-rg
+  ACR: vhacr
+  AKS_RG: poc-rg
+  AKS_NAME: claims
+  CONTAINER_TAG: ${{ github.sha }}
+  DEPLOY_NS: claims-ns
+
+jobs:
+
+  # variables to be used in the build job
+  github_variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print user name
+        run: echo `username -> ${{ inputs.username }}`
+      - name: github.sha
+        run: echo `github SHA -> ${{ github.sha }}`
+      - name: github.repository
+        run: echo `GITHUB_REPOSITORY= ${{ github.repository }}`
+      - name: github.run_number
+        run: echo `run number -> ${{ github.run_number }}`
+      - name: github.run_id
+        run: echo `run id -> ${{ github.run_id }}`
