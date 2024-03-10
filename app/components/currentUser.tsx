@@ -19,7 +19,7 @@ export default function CurrentUser() {
       const name = currentAccount.name;
       if (name) {
         setUser(name);
-        console.log('from useEffect user: ', name);
+        console.log('from useEffect currentUser: ', name);
 
         // get access token
         const accessToken = instance.acquireTokenSilent({

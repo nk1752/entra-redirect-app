@@ -7,7 +7,7 @@ export async function setAccessToken(accessToken: string) {
   cookies().set({
     name:'accessToken',
     value: accessToken,
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 1, // 1 day
     //httpOnly: true,
     path: '/',
   });
