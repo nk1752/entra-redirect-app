@@ -17,9 +17,6 @@ export default async function getUserProfileByEmail(input: string): Promise<User
   const accessTokenCookie = cookies().get('accessToken');
   const accessToken = accessTokenCookie?.value;
 
-  console.log('url >>>> ', url);
-  //console.log('accessToken cookie >>>> ', accessToken);
-
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -39,7 +36,7 @@ export default async function getUserProfileByEmail(input: string): Promise<User
       id: data.id,
       status: 200,
     };
-    console.log('user >>>> ', user);
+    //console.log('user >>>> ', user);
   }
 
   return user;

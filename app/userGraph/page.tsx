@@ -14,15 +14,16 @@ let user: User = {
 };
 
 export default function GraphPage() {
-  const [email, setEmail] = useState('');
+  const [emailInput, setEmailInput] = useState('');
   const [userProfile, setUserProfile] = useState<User | null>(null);
 
   async function searchUserProfileByEmail() {
 
     // get user profile by email
-    getUserProfileByEmail(email)
+    getUserProfileByEmail(emailInput)
       .then((res) => {
         setUserProfile(res);
+        console.log('userProfile >>>> ', userProfile);
         
       })
       .catch((err) => {
@@ -82,7 +83,7 @@ export default function GraphPage() {
               placeholder="1st part of email"
               style={{ width: '100%' }}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmailInput(e.target.value);
               }}
             />
           </label>

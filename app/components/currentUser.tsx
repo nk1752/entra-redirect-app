@@ -1,7 +1,8 @@
 'use client';
-import { useMsal } from '@azure/msal-react';
+import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { useEffect, useState } from 'react';
 import { cookieAccessToken } from '../lib/cookieAccessToken';
+import { cookieIdToken } from '../lib/cookieIdToken';
 
 export default function CurrentUser() {
   const { instance, accounts, inProgress } = useMsal();
@@ -26,9 +27,11 @@ export default function CurrentUser() {
           })
           .then((response) => {
             const accessToken = response.accessToken;
-            //const idToken = response.idToken;
+            const idToken = response.idToken;
             // add access token to cookies
             cookieAccessToken(accessToken);
+            // add id token to cookies for testing
+            cookieIdToken(idToken);
           })
           .catch((error) => {
             console.log('currentUser useEffect error: ', error);
