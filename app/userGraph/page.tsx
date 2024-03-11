@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, } from 'react';
 import Topbar from '../components/topbar';
 import { User } from '../interfaces/User';
 import getUserProfileByEmail from '../lib/getUserProfileByEmail';
@@ -15,15 +15,15 @@ let user: User = {
 
 export default function GraphPage() {
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [userProfile, setUserProfile] = useState<User | null>(null);
 
   async function searchUserProfileByEmail() {
+
+    // get user profile by email
     getUserProfileByEmail(email)
       .then((res) => {
-        user = res;
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
+        setUserProfile(res);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +52,7 @@ export default function GraphPage() {
               id="firstName"
               type="text"
               name="firstName"
-              defaultValue={user.firstName}
+              defaultValue={userProfile?.firstName}
               style={{ width: '100%' }}
               // get first name from user object
             />
@@ -66,7 +66,7 @@ export default function GraphPage() {
               className=" bg-slate-400 text-black"
               type="text"
               name="lastName"
-              defaultValue={user.lastName}
+              defaultValue={userProfile?.lastName}
               style={{ width: '100%' }}
             />
           </label>

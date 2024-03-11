@@ -11,7 +11,7 @@ let user: User = {
   status: 0,
 };
 
-export default async function getUserProfileByEmail(input: string) {
+export default async function getUserProfileByEmail(input: string): Promise<User>{
   const url = 'https://graph.microsoft.com/v1.0/users/'+input+'@pocvivahealth.com';
   
   const accessTokenCookie = cookies().get('accessToken');

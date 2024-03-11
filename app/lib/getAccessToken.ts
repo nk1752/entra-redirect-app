@@ -13,7 +13,7 @@ export default function GetAccessToken() {
     .then((response) => {
       const accessToken = response.accessToken;
       const idToken = response.idToken;
-      return accessToken;
+      //return accessToken;
     })
     .catch((error) => {
       console.log('currentUser useEffect error: ', error);
