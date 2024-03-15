@@ -3,6 +3,8 @@ import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { useEffect, useState } from 'react';
 import { cookieAccessToken } from '../lib/cookieAccessToken';
 import { cookieIdToken } from '../lib/cookieIdToken';
+import { loginRequest } from '@/utils/authConfig';
+import { log } from 'console';
 
 export default function CurrentUser() {
   const { instance, accounts, inProgress } = useMsal();
@@ -22,8 +24,9 @@ export default function CurrentUser() {
         // get access token
         const accessToken = instance
           .acquireTokenSilent({
-            scopes: ['User.Read'],
+            scopes: loginRequest.scopes,
             account: currentAccount,
+            
           })
           .then((response) => {
             const accessToken = response.accessToken;
@@ -37,7 +40,7 @@ export default function CurrentUser() {
             console.log('currentUser useEffect error: ', error);
             // get token interactively
             instance.acquireTokenRedirect({
-              scopes: ['User.Read'],
+              scopes: loginRequest.scopes,
               account: currentAccount,
             });
           });

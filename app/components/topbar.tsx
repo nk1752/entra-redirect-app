@@ -16,6 +16,7 @@ export default function Topbar() {
       >
         <Link href="/">Home</Link>
         <Link href="../userGraph">User Data</Link>
+        <Link href="../backendTest">Backend Test</Link>
       </div>
       <div className="flex flex-row w-1/12 gap-6 place-items-center justify-center text-1xl">
         <Signout />

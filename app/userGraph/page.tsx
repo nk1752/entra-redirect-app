@@ -23,7 +23,7 @@ export default function GraphPage() {
     getUserProfileByEmail(emailInput)
       .then((res) => {
         setUserProfile(res);
-        console.log('userProfile >>>> ', userProfile);
+        console.log('userProfile >>>> ', res);
         
       })
       .catch((err) => {
