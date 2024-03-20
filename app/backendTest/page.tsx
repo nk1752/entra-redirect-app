@@ -3,9 +3,12 @@
 import Topbar from '../components/topbar';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { backendRequest } from '@/utils/authConfig';
+import getBeTime from '../lib/getBeTime';
+import { useState } from 'react';
 
 export default function Page() {
   const { instance, accounts, inProgress } = useMsal();
+  const [time, setTime] = useState('***');
 
   async function getBackendToken() {
     console.log('getBackendToken >>>> ');
@@ -17,7 +20,19 @@ export default function Page() {
       .then((response) => {
         const accessToken = response.accessToken;
         const idToken = response.idToken;
-        console.log('accessToken for backend >>>> ', accessToken);
+        //console.log('accessToken for backend >>>> ', accessToken);
+        const res = getBeTime(accessToken)
+          .then((time) => {
+            if (time) {
+              console.log('time >>>> ', time);
+              setTime(time);
+            }
+          })
+          .catch((error) => {
+            console.log('getBeTime error: ', error);
+            setTime('Error: ' + error);
+          });
+        //console.log('time >>>> ', time);
       })
       .catch((error) => {
         console.log('getBackendToken error: ', error);
@@ -34,16 +49,19 @@ export default function Page() {
           action={getBackendToken}
           className="flex flex-col bg-gray-700 max-h-96 p-4 border-4 text-stone-100 gap-4"
         >
-          <h3 className="text-2xl font-bold">Get Token</h3>
+          <h3 className="text-2xl font-bold">Backend Time</h3>
+          <p className="text-xl">{time}</p>
 
           <button
             className=" border border-blue-500 w-24 h-7 bg-gray-700 hover:bg-gray-800 text-stone-100 rounded-md"
             type="submit"
           >
-            Submit
+            get time
           </button>
         </form>
       </div>
+      
+      
     </main>
   );
 }

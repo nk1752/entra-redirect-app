@@ -22,7 +22,7 @@ export default function CurrentUser() {
         console.log('from useEffect currentUser: ', name);
 
         // get access token
-        const accessToken = instance
+        instance
           .acquireTokenSilent({
             scopes: loginRequest.scopes,
             account: currentAccount,
