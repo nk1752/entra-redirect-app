@@ -12,7 +12,7 @@ let user: User = {
 };
 
 export default async function getUserProfileByEmail(input: string): Promise<User>{
-  const url = 'https://graph.microsoft.com/v1.0/users/'+input+'@pocvivahealth.com';
+  const url = 'https://graph.microsoft.com/v1.0/users/'+input+'@uabmc.edu';
   
   const accessTokenCookie = cookies().get('accessToken');
   const accessToken = accessTokenCookie?.value;
