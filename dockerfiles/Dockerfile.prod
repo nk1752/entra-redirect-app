@@ -29,13 +29,19 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # setup systen group and user
-RUN addgroup --system viva --gid 1001 && adduser --system devops --uid 1001 --ingroup viva
+RUN addgroup --system --gid 1001 viva
+RUN adduser --system --uid 1001 devops
+
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
 # You only need to copy next.config.js if you are NOT using the default configuration
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/tsconfig.json ./
-COPY --from=builder /app/.env.production.local ./
+# COPY --from=builder /app/next.config.js ./
+# COPY --from=builder /app/tsconfig.json ./
+# COPY --from=builder /app/.env.local ./
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -45,6 +51,11 @@ COPY --from=builder --chown=devops:viva /app/.next/static ./.next/static
 USER devops
 
 EXPOSE 3000
+ENV PORT 3000
 
-CMD ["node", "server.js"]
+# CMD ["node", "server.js"]
 # CMD ["npm", "start"]
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD HOSTNAME="0.0.0.0" node server.js

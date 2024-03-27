@@ -18,6 +18,7 @@ $params = @{
 	"@odata.id" = "https://graph.microsoft.com/v1.0/policies/tokenLifetimePolicies/$tokenLifetimePolicyId"
 }
 
+# Application Object ID
 $applicationObjectId="a5ab6d72-5eff-4b97-89dd-a740cd226085"
 
 New-MgApplicationTokenLifetimePolicyByRef -ApplicationId $applicationObjectId -BodyParameter $params
