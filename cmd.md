@@ -13,6 +13,7 @@ kubectl config view # Show Merged kubeconfig settings.
 https://phoenixnap.com/kb/kubectl-commands-cheat-sheet
 kubectl get namespaces
 kubectl get pods
+kubectl get pod -A
 kubectl get pods -o wide
 kubectl get pods --show-labels
 kubectl get pods --field-selector=spec.nodeName=[server-name]
