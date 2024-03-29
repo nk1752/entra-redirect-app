@@ -3,7 +3,7 @@ kind: Deployment
 # deploy to usernode pool
 metadata:
   name: entra-deployment
-  namespace: claims-ns
+  namespace: entra-ns
   labels:
     app: entra
 spec:
@@ -20,7 +20,7 @@ spec:
       
       containers:
       - name: entra
-        image: vhacr1.azurecr.io/entra:latest
+        image: vhacr.azurecr.io/entra:latest
         resources:
           requests:
             memory: "128Mi"

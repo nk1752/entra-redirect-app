@@ -8,8 +8,8 @@ env:
   AKS_RG: claims-rg
   AKS_NAME: claims-cluster
   CONTAINER_TAG: ${{ github.sha }}
-  CONTAINER_NAME: claims
-  DEPLOY_NS: claims-ns
+  CONTAINER_NAME: entra
+  DEPLOY_NS: entra-ns
   USERNAME: 'Nadeem Khalid'
 
 jobs:
