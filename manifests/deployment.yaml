@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 # deploy to usernode pool
 metadata:
-  name: appdir-prisma-deployment
-  namespace: prisma
+  name: entra-deployment
+  namespace: claims-ns
   labels:
-    app: appdir-prisma
+    app: entra
 spec:
 
   replicas: 2
   selector:
     matchLabels:
-      app: appdir-prisma
+      app: entra
   template:
     metadata:
       labels:
-        app: appdir-prisma
+        app: entra
     spec:
       
       containers:
-      - name: appdir-prisma
-        image: vhacr1.azurecr.io/appdir-prisma:latest
+      - name: entra
+        image: vhacr1.azurecr.io/entra:latest
         resources:
           requests:
             memory: "128Mi"

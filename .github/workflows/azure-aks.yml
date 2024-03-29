@@ -1,15 +1,12 @@
 name: build and deploy claims-app to AKS
 on:
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
   ACR_RG: poc-rg
   ACR: vhacr
-  AKS_RG: poc-rg
-  AKS_NAME: claims
+  AKS_RG: claims-rg
+  AKS_NAME: claims-cluster
   CONTAINER_TAG: ${{ github.sha }}
   CONTAINER_NAME: claims
   DEPLOY_NS: claims-ns
@@ -111,3 +108,4 @@ jobs:
           # modify the manifest file to point to the image
           manifests: |
             manifests/deployment.yml
+            manifests/service.yml
