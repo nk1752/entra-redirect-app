@@ -91,7 +91,7 @@ jobs:
         with:
           resource-group: ${{ env.AKS_RG }}
           cluster-name: ${{ env.AKS_NAME }}
-          admin: 'false'
+          admin: 'true'
           use-kubelogin: 'true'
 
       # Deploys application based on given manifest file
