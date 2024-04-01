@@ -1,0 +1,87 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# GitHub recommends pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA.
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: Build and deploy using Helm
+
+env:
+  ACR: vhacr
+  PROJECT_NAME: claims-app # set this to your project's name
+  AKS_RG: claims-rg
+  ACR_RG: poc-rg
+  AKS_NAME: claims-cluster
+  CONTAINER_NAME: entra
+  CONTAINER_TAG: ${{ github.sha }}
+  DEPLOY_NS: entra-ns # set this to the name of your AKS cluster
+
+  AZURE_CONTAINER_REGISTRY: MY_REGISTRY_NAME # set this to the name of your container registry
+
+  RESOURCE_GROUP: MY_RESOURCE_GROUP # set this to the resource group containing your AKS cluster
+
+  REGISTRY_URL: MY_REGISTRY_URL # set this to the URL of your registry
+  # If you bake using helm:
+  CHART_PATH: MY_HELM_FILE # set this to the path to your helm file
+  CHART_OVERRIDE_PATH: MY_OVERRIDE_FILES # set this to an array of override file paths
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        id: checkout_code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        id: login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: build and push image to ACR
+        id: build
+        run: |
+          az acr build \
+          --image ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
+          --registry ${{ env.ACR }} \
+          -g ${{ env.ACR_RG }} \
+          -f ./dockerfiles/Dockerfile.prod .
+
+      - name: Gets K8s context
+        id: context
+        uses: azure/aks-set-context@v3
+        with:
+            resource-group: ${{ env.AKS_RG }}
+            cluster-name: ${{ env.AKS_NAME }}
+            admin: 'false'
+            use-kubelogin: 'true'
+          
+
+      - name: Configure deployment
+        id: bake
+        uses: azure/k8s-bake@61041e8c2f75c1f01186c8f05fb8b24e1fc507d8
+        with:
+          renderEngine: 'helm'
+          helmChart: ${{ env.CHART_PATH }}
+          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
+          overrides: |
+            replicas:2
+          helm-version: 'latest'
+
+      - name: Deploys application
+        uses: Azure/k8s-deploy@v4
+        with:
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          images: |
+            ${{ env.ACR }}.azurecr.io/${{ env.PROJECT_NAME }}:${{ env.CONTAINER_TAG }}
+          imagepullsecrets: |
+            ${{ env.PROJECT_NAME }}
