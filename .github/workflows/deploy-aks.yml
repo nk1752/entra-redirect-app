@@ -13,25 +13,10 @@ env:
   USERNAME: 'Nadeem Khalid'
 
 jobs:
-  # variables to be used in the build job
-  reuse_variables:
-    uses: nk1752/redirect-app/.github/workflows/variables.yml@main
-    with:
-      username: 'Nadeem Khalid'
-
-  comapre:
-    runs-on: ubuntu-latest
-    steps:
-      - name: shared variables
-        run: echo `The value of the variable is ${{ env.USERNAME }}`
-      - name: github.sha
-        run: echo `github SHA -> ${{ github.sha }}`
-
+  
   # build job
   build:
     runs-on: ubuntu-latest
-
-    needs: [reuse_variables, comapre]
 
     permissions:
       actions: read
