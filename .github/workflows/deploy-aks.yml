@@ -9,7 +9,7 @@ env:
   AKS_NAME: claims-cluster
   CONTAINER_TAG: latest
   CONTAINER_NAME: entra
-  DEPLOY_NS: default
+  DEPLOY_NS: claims-ns
   USERNAME: 'Nadeem Khalid'
 
 jobs:
