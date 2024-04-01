@@ -83,7 +83,8 @@ jobs:
       - name: setup kubectl
         uses: azure/use-kubelogin@v1
         with:
-          kubelogin-version: 'v0.0.25' # Default version of kubelogin is latest
+          kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
+          skip-cache: true
 
       # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
       - name: Get K8s context
@@ -91,7 +92,7 @@ jobs:
         with:
           resource-group: ${{ env.AKS_RG }}
           cluster-name: ${{ env.AKS_NAME }}
-          admin: 'true'
+          admin: 'false'
           use-kubelogin: 'true'
 
       # Deploys application based on given manifest file
