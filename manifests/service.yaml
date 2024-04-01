@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: entra-service
   namespace: default
+  labels:
+    app: entra
 spec:
   type: ClusterIP
   selector:

@@ -12,7 +12,7 @@ export default function GetIdToken() {
     })
     .then((response) => {
       const idToken = response.idToken;
-      return idToken;
+      console.log('idToken >>>> ', idToken);
     })
     .catch((error) => {
       console.log('currentUser useEffect error: ', error);

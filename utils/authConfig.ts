@@ -1,9 +1,9 @@
 // Objective: Configuration for authentication using MSAL
 import { Configuration } from '@azure/msal-browser';
 
-const tenant_id = process.env.NEXT_PUBLIC_UAB_VIVA_TENANT_ID|| '';
+const tenant_id = process.env.NEXT_PUBLIC_POC_TENANT_ID || '';
 //const client_id = process.env.NEXT_PUBLIC_CLIENT_ID || '';
-const client_id = process.env.NEXT_PUBLIC_UAB_VIVA_CLIENT_ID || '';
+const client_id = process.env.NEXT_PUBLIC_POC_CLIENT_ID || '';
 
 
 
@@ -25,7 +25,7 @@ export const msalConfig: Configuration = {
   };
 
 export const backendRequest = {
-  scopes: ['api://8116934e-f75b-4fb8-a438-ef0da5009b32/.default']
+  scopes: ['api://26c696ca-aa6a-4802-955b-aff06d3fe111/.default']
 };
 
 export const loginRequest = {
