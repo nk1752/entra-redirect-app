@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: entra-service
-  namespace: default
+  namespace: claims-ns
   labels:
     app: entra
 spec:
