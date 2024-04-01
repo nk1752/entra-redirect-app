@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RG: nk-cluster_group
-  ACR: vhacr1
-  AKS_RG: nk-rg
-  AKS_NAME: nk-cluster
+  ACR_RG: poc-rg
+  ACR: vhacr
+  AKS_RG: claims-rg
+  AKS_NAME: claims-cluster
   CONTAINER_TAG: ${{ github.sha }}
   CONTAINER_NAME: entra
   DEPLOY_NS: entra-ns
