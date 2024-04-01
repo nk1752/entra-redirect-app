@@ -20,7 +20,7 @@ spec:
       
       containers:
       - name: entra
-        image: vhacr1.azurecr.io/entra:latest
+        image: vhclaims.azurecr.io/entra:latest
         resources:
           requests:
             memory: "128Mi"

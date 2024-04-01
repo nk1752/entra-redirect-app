@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RG: nk-cluster_group
-  ACR: vhacr1
-  AKS_RG: nk-rg
+  ACR_RG: claims-rg
+  ACR: vhclaims
+  AKS_RG: claims-rg
   AKS_NAME: nk-cluster
   CONTAINER_TAG: ${{ github.sha }}
   CONTAINER_NAME: entra
@@ -103,10 +103,10 @@ jobs:
           namespace: ${{ env.DEPLOY_NS }}
           action: deploy
           strategy: basic  # basic | canary | blue-green
+          manifests: |
+            manifests/deployment.yaml
           # FQDN of the image to be deployed
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
           # modify the manifest file to point to the image
-          manifests: |
-            manifests/deployment.yaml
-            manifests/service.yaml
+          
