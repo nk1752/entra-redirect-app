@@ -3,7 +3,7 @@ kind: Deployment
 # deploy to usernode pool
 metadata:
   name: entra-deployment
-  namespace: entra-ns
+  namespace: default
   labels:
     app: entra
 spec:
