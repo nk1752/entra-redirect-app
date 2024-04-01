@@ -6,7 +6,7 @@ env:
   ACR_RG: claims-rg
   ACR: vhclaims
   AKS_RG: claims-rg
-  AKS_NAME: nk-cluster
+  AKS_NAME: claims-cluster
   CONTAINER_TAG: ${{ github.sha }}
   CONTAINER_NAME: entra
   DEPLOY_NS: entra-ns
