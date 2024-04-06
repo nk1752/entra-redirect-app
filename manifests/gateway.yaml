@@ -1,18 +1,20 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
-  name: gateway-01
-  namespace: test-infra
+  name: ag4claims-gateway
+  namespace: claims-ns
+  anatations:
+    alb.networking.azure.io/alb-id: alb-nk
 spec:
-  gatewayClassName: istio
+  gatewayClassName: azure-alb-external
   listeners:
-  - name: listener-01
+  - name: ag4claims-listener
     port: 80
     protocol: HTTP
     allowedRoutes:
       namespaces:
-        from:
-        selector:
-          matchLabels:
-            istio: ingressgateway
+        from: Same
+  addresses:
+  - type: alb.networking.azure.io/alb-frontend
+    value: fe-nk
 
