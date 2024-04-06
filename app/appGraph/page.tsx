@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import Topbar from '../components/topbar';
 import { User } from '../interfaces/User';
 import { ConfidentialClientApplication } from '@azure/msal-node';
+import { getSecret } from '@/utils/azKeyVault';
 
 let userProfile: User = {
   firstName: '',
@@ -14,13 +15,20 @@ let userProfile: User = {
 };
 
 export default async function AppGraphPage() {
+
+  const secretNmae = process.env.SECRET_NAME || '';
+  console.log('secretName', secretNmae);
+
+  const clientSecret = await getSecret(secretNmae);
+
+  console.log('clientSecret >>>> ', clientSecret);
   
 
   const authConfig = {
     auth: {
       clientId: process.env.NEXT_PUBLIC_POC_CLIENT_ID || '',
       authority: process.env.NEXT_PUBLIC_POC_AUTHORITY || '',
-      clientSecret: process.env.POC_CLIENT_SECRET || '',
+      clientSecret: clientSecret,
     },
   };
 

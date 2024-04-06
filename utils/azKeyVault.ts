@@ -27,5 +27,7 @@ export async function getSecret(secretName: string) {
 
 
     const secret = await client.getSecret(secretName);
+    console.log("Secret value:", secret.value);
+    
     return secret.value;
 }
