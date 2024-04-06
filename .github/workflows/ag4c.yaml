@@ -15,13 +15,14 @@ env:
 jobs:
   
   # build job
-  build:
-    runs-on: ubuntu-latest
+  build-push-deploy:
 
     permissions:
       contents: read
       packages: read
       id-token: write
+
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo
