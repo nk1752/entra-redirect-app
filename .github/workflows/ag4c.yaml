@@ -75,6 +75,8 @@ jobs:
           manifests: |
             manifests/deployment.yaml
             manifests/service.yaml
+            manifests/gateway.yaml
+            manifests/http-routes.yaml
           # FQDN of the image to be deployed
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
