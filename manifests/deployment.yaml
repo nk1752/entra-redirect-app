@@ -3,7 +3,7 @@ kind: Deployment
 # deploy to usernode pool
 metadata:
   name: ag4claims-deployment
-  namespce: ag4claims-ns
+  namespace: ag4claims-ns
   labels:
     app: ag4claims
 spec:
