@@ -29,7 +29,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-        # Login to Azure using viva-claims-be app registration
+        # Login to Azure using github-actions app registration
       - name: Azure Login
         uses: azure/login@v1
         with:
