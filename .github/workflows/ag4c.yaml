@@ -1,10 +1,10 @@
-name: all-in-one
+name: App Gateway for Containers
 on:
   workflow_dispatch:
 
 env:
-  ACR_RG: claims-rg
-  ACR: vhclaims
+  ACR_RG: poc-rg
+  ACR: vhacr
   AKS_RG: aks-rg
   AKS_NAME: aks
   CONTAINER_TAG: ${{ github.sha }}
@@ -17,11 +17,6 @@ jobs:
   # build job
   build:
     runs-on: ubuntu-latest
-
-    permissions:
-      actions: read
-      contents: read
-      id-token: write
 
     steps:
       - name: Checkout Repo
@@ -47,10 +42,14 @@ jobs:
  
       # setup kubectl
       - name: setup kubectl
-        uses: azure/use-kubelogin@v1
+        uses: azure/use-kubelogin@v1.2
         with:
           kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
           skip-cache: true
+        # get list of all pods
+      - name: get pods
+        run: |
+            kubectl get pods -A
 
       # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
       - name: Get K8s context
@@ -61,18 +60,4 @@ jobs:
           admin: 'false'
           use-kubelogin: 'true'
 
-      # Deploys application based on given manifest file
-      - name: Deploys application
-        uses: Azure/k8s-deploy@v4
-        with:
-          resource-group: ${{ env.AKS_RG }}
-          namespace: ${{ env.DEPLOY_NS }}
-          action: deploy
-          strategy: basic  # basic | canary | blue-green
-          manifests: |
-            manifests/deployment.yaml
-          # FQDN of the image to be deployed
-          images: |
-            ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
-          # modify the manifest file to point to the image
-          
+      
