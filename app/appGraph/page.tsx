@@ -21,9 +21,6 @@ export default async function AppGraphPage() {
 
   const clientSecret = await getSecret(secretNmae);
 
-  console.log('clientSecret >>>> ', clientSecret);
-  
-
   const authConfig = {
     auth: {
       clientId: process.env.NEXT_PUBLIC_POC_CLIENT_ID || '',

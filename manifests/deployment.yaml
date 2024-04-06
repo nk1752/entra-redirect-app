@@ -19,7 +19,7 @@ spec:
     spec:
       
       containers:
-      - name: ag4claims
+      - name: k
         image: vhacr.azurecr.io/ag4claims:latest
         resources:
           requests:
