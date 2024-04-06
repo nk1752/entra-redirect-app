@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: ag4claims-gateway
-  namespace: claims-ns
+  namespace: ag4claims-ns
   anatations:
     alb.networking.azure.io/alb-id: alb-nk
 spec:
