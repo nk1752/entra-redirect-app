@@ -20,7 +20,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write
+      packages: read
       id-token: write
 
     steps:
@@ -51,10 +51,7 @@ jobs:
         with:
           kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
           skip-cache: true
-        # get list of all pods
-      - name: get pods
-        run: |
-            kubectl get pods -A
+        
 
       # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
       - name: Get K8s context
@@ -64,5 +61,25 @@ jobs:
           cluster-name: ${{ env.AKS_NAME }}
           admin: 'false'
           use-kubelogin: 'true'
+
+      # Deploys application based on given manifest file
+      - name: Deploys application
+        uses: Azure/k8s-deploy@v4
+        with:
+          resource-group: ${{ env.AKS_RG }}
+          namespace: ${{ env.DEPLOY_NS }}
+          action: deploy
+          strategy: basic  # basic | canary | blue-green
+          manifests: |
+            manifests/deployment.yaml
+          # FQDN of the image to be deployed
+          images: |
+            ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
+        # modify the manifest file to point to the image
+
+      # get list of all pods
+      - name: get pods
+        run: |
+            kubectl get pods -A
 
       

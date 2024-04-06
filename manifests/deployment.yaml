@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 # deploy to usernode pool
 metadata:
-  name: entra-deployment
-  namespce: claims-ns
+  name: ag4claims-deployment
+  namespce: ag4claims-ns
   labels:
-    app: entra
+    app: ag4claims
 spec:
 
   replicas: 2
   selector:
     matchLabels:
-      app: entra
+      app: ag4claims
   template:
     metadata:
       labels:
-        app: entra
+        app: ag4claims
     spec:
       
       containers:
-      - name: entra
-        image: vhclaims.azurecr.io/entra:latest
+      - name: ag4claims
+        image: vhacr.azurecr.io/ag4claims:latest
         resources:
           requests:
             memory: "128Mi"
