@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: entra-service
-  namespace: claims-ns
+  name: ag4claims-service
+  namespace: ag4claims-ns
   labels:
-    app: entra
+    app: ag4claims
 spec:
   type: ClusterIP
   selector:
-    app: entra
+    app: ag4claims
   ports:
     - protocol: TCP
       name: http

@@ -74,6 +74,7 @@ jobs:
           strategy: basic  # basic | canary | blue-green
           manifests: |
             manifests/deployment.yaml
+            manifests/service.yaml
           # FQDN of the image to be deployed
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
