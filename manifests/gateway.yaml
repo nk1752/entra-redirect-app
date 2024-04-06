@@ -3,8 +3,7 @@ kind: Gateway
 metadata:
   name: ag4claims-gateway
   namespace: ag4claims-ns
-  anatations:
-    alb.networking.azure.io/alb-id: alb-nk
+  
 spec:
   gatewayClassName: azure-alb-external
   listeners:
