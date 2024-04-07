@@ -1,6 +1,7 @@
 az aks get-credentials -n MyManagedCluster -g MyResourceGroup
 
 alias k=kubectl
+unalias k
 alias kg='kubectl get'
 alias kgpo='kubectl get pod'
 

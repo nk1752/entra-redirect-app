@@ -125,3 +125,5 @@ az role assignment create \
 
 # Create the Association
 az network alb association create -g $RESOURCE_GROUP -n $ASSOCIATION_NAME --alb-name $AGFC_NAME --subnet $ALB_SUBNET_ID
+
+RESOURCE_ID=$(az network alb show --resource-group aks-rg --name alb-nk --query id -o tsv)
