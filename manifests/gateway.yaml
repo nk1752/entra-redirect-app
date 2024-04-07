@@ -10,11 +10,17 @@ spec:
   gatewayClassName: azure-alb-external
   listeners:
   - name: ag4claims-listener
-    port: 80
-    protocol: HTTP
+    port: 443
+    protocol: HTTPS
     allowedRoutes:
       namespaces:
         from: Same
+    tls:
+      mode: Terminate
+      certificateRef:
+      - kind: Secret
+        group: ""
+        name: fe-tls-secret
   addresses:
   - type: alb.networking.azure.io/alb-frontend
     value: fe-nk

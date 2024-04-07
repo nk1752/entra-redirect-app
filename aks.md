@@ -15,3 +15,11 @@ kubectl get crd
 kubectl get services
 
 kubectl describe services -A
+
+k logs -f alb-controller-7d9f9d9565-5lk9f -n azure-alb-system
+
+
+
+k delete
+
+k logs -f ca182f18-edea-48fd-b592-cba17f432ad3 
