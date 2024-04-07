@@ -6,6 +6,9 @@ metadata:
 spec:
   parentRefs:
   - name: ag4claims-gateway
+  hostnames:
+  - "staging.pocvivahealth.com"
+  - "claimsworkflowtest.pocvivahealth.com"
   rules:
   - backendRefs:
     - name: ag4claims-service

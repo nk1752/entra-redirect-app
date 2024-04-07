@@ -17,7 +17,7 @@ spec:
         from: Same
     tls:
       mode: Terminate
-      certificateRef:
+      certificateRefs:
       - kind: Secret
         group: ""
         name: fe-tls-secret
