@@ -9,6 +9,7 @@ spec:
   hostnames:
   - "staging.pocvivahealth.com"
   - "claimsworkflowtest.pocvivahealth.com"
+  - "www.pocvivahealth.com"
   rules:
   - backendRefs:
     - name: ag4claims-service
