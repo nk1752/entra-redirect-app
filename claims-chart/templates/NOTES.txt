@@ -1,0 +1,2 @@
+servicename=$(kubectl get service -l "app={{ .Values.appName }}" -0 jsonpath="{.items[0].metadata.name}")
+kubectl port-forward service/{{ .Values.appName }} 8888:3000 --namespace {{ .Values.namespace }}

@@ -20,7 +20,7 @@ export default function Page() {
       .then((response) => {
         const accessToken = response.accessToken;
         const idToken = response.idToken;
-        //console.log('accessToken for backend >>>> ', accessToken);
+        console.log('accessToken for backend >>>> ', accessToken);
         const res = getBeTime(accessToken)
           .then((time) => {
             if (time) {

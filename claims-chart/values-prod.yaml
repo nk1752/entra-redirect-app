@@ -1,0 +1,35 @@
+replicaCount: 3
+
+namespace: helm-ns
+
+appName: claims
+
+image:
+  name: claims
+  repository: vhacr.azurecr.io
+  pullPolicy: Always
+  tag: latest # 4cda6932965dfa1c0f1eb764358a7baf4d472d49
+
+configMap:
+  name: claims-config
+  data:
+    claims: |
+      {
+        "claims": [
+          {
+            "id": 1,
+            "name": "Claim 1",
+            "description": "Description 1"
+          },
+          {
+            "id": 2,
+            "name": "Claim 2",
+            "description": "Description 2"
+          },
+          {
+            "id": 3,
+            "name": "Claim 3",
+            "description": "Description 3"
+          }
+        ]
+      }

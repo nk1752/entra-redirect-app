@@ -19,24 +19,26 @@ env:
   CONTAINER_TAG: ${{ github.sha }}
   DEPLOY_NS: entra-ns # set this to the name of your AKS cluster
 
-  AZURE_CONTAINER_REGISTRY: MY_REGISTRY_NAME # set this to the name of your container registry
-
-  RESOURCE_GROUP: MY_RESOURCE_GROUP # set this to the resource group containing your AKS cluster
-
   REGISTRY_URL: MY_REGISTRY_URL # set this to the URL of your registry
   # If you bake using helm:
-  CHART_PATH: MY_HELM_FILE # set this to the path to your helm file
-  CHART_OVERRIDE_PATH: MY_OVERRIDE_FILES # set this to an array of override file paths
+  CHART_PATH: claims-chart # set this to the path to your helm file
+  CHART_OVERRIDE_PATH: claims-chart/values-dev.yaml # set this to an array of override file paths
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-image:
+
+    permissions:
+      contents: read
+      id-token: write
+    
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        id: checkout_code
+        id: checkout_repo
         uses: actions/checkout@v4
 
       - name: Azure Login
@@ -51,10 +53,35 @@ jobs:
         id: build
         run: |
           az acr build \
-          --image ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
-          --registry ${{ env.ACR }} \
-          -g ${{ env.ACR_RG }} \
-          -f ./dockerfiles/Dockerfile.prod .
+            --image ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
+            --registry ${{ env.ACR }} \
+            -g ${{ env.ACR_RG }} \
+            -f ./dockerfiles/Dockerfile.prod .
+
+  deploy-app:
+
+    needs: [build-image]
+
+    permissions:
+      contents: read
+      id-token: write
+      actions: read
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        id: checkout_repo
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        id: login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Gets K8s context
         id: context
@@ -68,7 +95,7 @@ jobs:
 
       - name: Configure deployment
         id: bake
-        uses: azure/k8s-bake@61041e8c2f75c1f01186c8f05fb8b24e1fc507d8
+        uses: azure/k8s-bake@v3
         with:
           renderEngine: 'helm'
           helmChart: ${{ env.CHART_PATH }}
@@ -83,5 +110,3 @@ jobs:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.PROJECT_NAME }}:${{ env.CONTAINER_TAG }}
-          imagepullsecrets: |
-            ${{ env.PROJECT_NAME }}

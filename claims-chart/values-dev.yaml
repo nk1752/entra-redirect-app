@@ -1,0 +1,31 @@
+replicaCount: 1
+
+namespace: dev-ns
+
+appName: claims
+
+
+configMap:
+  name: claims-config
+  data:
+    env: dev
+    claims: |
+      {
+        "claims": [
+          {
+            "id": 1,
+            "name": "Claim 1",
+            "description": "Description 1"
+          },
+          {
+            "id": 2,
+            "name": "Claim 2",
+            "description": "Description 2"
+          },
+          {
+            "id": 3,
+            "name": "Claim 3",
+            "description": "Description 3"
+          }
+        ]
+      }
