@@ -10,16 +10,15 @@
 name: Build and deploy using Helm
 
 env:
-  ACR: vhacr
-  PROJECT_NAME: claims-app # set this to your project's name
-  AKS_RG: claims-rg
   ACR_RG: poc-rg
-  AKS_NAME: claims-cluster
-  CONTAINER_NAME: entra
-  CONTAINER_TAG: ${{ github.sha }}
-  DEPLOY_NS: entra-ns # set this to the name of your AKS cluster
+  ACR: vhacr
 
-  REGISTRY_URL: MY_REGISTRY_URL # set this to the URL of your registry
+  AKS_RG: aks-rg
+  AKS_NAME: aks
+  CONTAINER_NAME: claims
+  CONTAINER_TAG: ${{ github.sha }}
+  DEPLOY_NS: helm-ns # set this to the name of your AKS cluster
+
   # If you bake using helm:
   CHART_PATH: claims-chart # set this to the path to your helm file
   CHART_OVERRIDE_PATH: claims-chart/values-dev.yaml # set this to an array of override file paths
