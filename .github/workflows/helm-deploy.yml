@@ -82,12 +82,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Gets K8s context
+      - name: Set K8s context
         id: context
         uses: azure/aks-set-context@v3
         with:
             resource-group: ${{ env.AKS_RG }}
             cluster-name: ${{ env.AKS_NAME }}
+            subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             admin: 'false'
             use-kubelogin: 'true'
           
