@@ -27,7 +27,6 @@ env:
   CHART_OVERRIDE_PATH: claims-chart/values-dev.yaml # set this to an array of override file paths
 
 
-
 jobs:
   build-image:
 
@@ -60,6 +59,25 @@ jobs:
             -g ${{ env.ACR_RG }} \
             -f ./dockerfiles/Dockerfile.prod .
 
+  deploy:
+    needs: build-image
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        id: checkout_repo
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        id: login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       # setup kubectl
       - name: setup kubectl
         uses: azure/use-kubelogin@76597ae0fcbaace21b05e13a2cbf8daee2c6e820  # v1.2
@@ -85,7 +103,9 @@ jobs:
           helmChart: ${{ env.CHART_PATH }}
           overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
           overrides: |
-            replicas:2
+            image:
+              repository: ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}
+              tag: ${{ env.CONTAINER_TAG }}
           helm-version: 'latest'
 
       
