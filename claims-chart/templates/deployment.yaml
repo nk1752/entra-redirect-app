@@ -23,6 +23,7 @@ spec:
       - name: {{ .Values.image.name }}
         image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
         
+        # setup resources
         resources:
           requests:
             memory: "128Mi"
@@ -30,6 +31,19 @@ spec:
           limits:
               memory: "256Mi"
               cpu: "1000m"
+        # setup probes
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 5
         
         ports:
         - containerPort: 3000
