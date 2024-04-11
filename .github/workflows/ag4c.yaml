@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout Repo
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
         # Login to Azure using github-actions app registration
       - name: Azure Login
@@ -49,7 +49,7 @@ jobs:
  
       # setup kubectl
       - name: setup kubectl
-        uses: azure/use-kubelogin@v1.2
+        uses: azure/use-kubelogin@76597ae0fcbaace21b05e13a2cbf8daee2c6e820  # v1.2
         with:
           kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
           skip-cache: true
@@ -66,7 +66,7 @@ jobs:
 
       # Deploys application based on given manifest file
       - name: Deploys application
-        uses: Azure/k8s-deploy@v4
+        uses: Azure/k8s-deploy@1082a9290dd683dfe1d60582f418a27684e3a391  # v4.10
         with:
           resource-group: ${{ env.AKS_RG }}
           namespace: ${{ env.DEPLOY_NS }}
