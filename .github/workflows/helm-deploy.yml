@@ -104,13 +104,4 @@ jobs:
             replicas:2
           helm-version: 'latest'
 
-      - name: Deploys application
-        uses: Azure/k8s-deploy@v4
-        with:
-          resource-group: ${{ env.AKS_RG }}
-          namespace: ${{ env.DEPLOY_NS }}
-          action: deploy
-          strategy: basic
-          manifests: ${{ steps.bake.outputs.manifestsBundle }}
-          images: |
-            ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
+      
