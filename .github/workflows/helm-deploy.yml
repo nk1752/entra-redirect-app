@@ -106,7 +106,7 @@ jobs:
         with:
           renderEngine: 'helm'
           helmChart: ${{ env.CHART_PATH }}
-          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
+          
           overrides: |
             image:
               repository: ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}
