@@ -84,7 +84,7 @@ jobs:
 
       - name: Set K8s context
         id: context
-        uses: azure/aks-set-context@v3
+        uses: azure/aks-set-context@c31a28e2fe51c3be4a7a573649d3b4768081f7f1  # v4.0.0
         with:
             resource-group: ${{ env.AKS_RG }}
             cluster-name: ${{ env.AKS_NAME }}
