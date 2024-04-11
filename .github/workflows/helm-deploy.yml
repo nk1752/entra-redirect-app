@@ -9,6 +9,9 @@
 
 name: Build and deploy using Helm
 
+on:
+  workflow_dispatch:
+
 env:
   ACR_RG: poc-rg
   ACR: vhacr
@@ -23,8 +26,7 @@ env:
   CHART_PATH: claims-chart # set this to the path to your helm file
   CHART_OVERRIDE_PATH: claims-chart/values-dev.yaml # set this to an array of override file paths
 
-on:
-  workflow_dispatch:
+
 
 jobs:
   build-image:
@@ -65,15 +67,14 @@ jobs:
           kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
           skip-cache: true
 
-      - name: Set K8s context
-        id: context
-        uses: azure/aks-set-context@c31a28e2fe51c3be4a7a573649d3b4768081f7f1  # v4.0.0
+      # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
         with:
-            resource-group: ${{ env.AKS_RG }}
-            cluster-name: ${{ env.AKS_NAME }}
-            subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            admin: 'false'
-            use-kubelogin: 'true'
+          resource-group: ${{ env.AKS_RG }}
+          cluster-name: ${{ env.AKS_NAME }}
+          admin: 'false'
+          use-kubelogin: 'true'
           
 
       - name: Configure deployment
