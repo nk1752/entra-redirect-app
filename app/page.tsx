@@ -25,6 +25,7 @@ export default async function Home() {
           ID: {user?.id}<br />
           
         </div>
+        Deployed by Helm!
       </div>
     
     
