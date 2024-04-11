@@ -61,6 +61,11 @@ jobs:
 
   deploy:
     needs: build-image
+    
+    permissions:
+      contents: read
+      id-token: write
+      actions: read
 
     runs-on: ubuntu-latest
 
