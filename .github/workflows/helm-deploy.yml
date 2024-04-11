@@ -58,6 +58,13 @@ jobs:
             -g ${{ env.ACR_RG }} \
             -f ./dockerfiles/Dockerfile.prod .
 
+      # setup kubectl
+      - name: setup kubectl
+        uses: azure/use-kubelogin@76597ae0fcbaace21b05e13a2cbf8daee2c6e820  # v1.2
+        with:
+          kubelogin-version: 'v0.0.24' # Default version of kubelogin is latest
+          skip-cache: true
+
       - name: Set K8s context
         id: context
         uses: azure/aks-set-context@c31a28e2fe51c3be4a7a573649d3b4768081f7f1  # v4.0.0
