@@ -40,11 +40,11 @@ jobs:
     steps:
       - name: Checkout code
         id: checkout_repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac  # v4.0.0
 
       - name: Azure Login
         id: login
-        uses: azure/login@v1
+        uses: azure/login@332d569187d71a3c53ab5c5262f97825d774b4e6  # v2.0.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -73,11 +73,11 @@ jobs:
 
       - name: Checkout code
         id: checkout_repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac  # v4.0.0
 
       - name: Azure Login
         id: login
-        uses: azure/login@v1
+        uses: azure/login@332d569187d71a3c53ab5c5262f97825d774b4e6  # v2.0.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -91,8 +91,8 @@ jobs:
           skip-cache: true
 
       # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
-      - name: Get K8s context
-        uses: azure/aks-set-context@v3
+      - name: Set K8s context
+        uses: azure/aks-set-context@c31a28e2fe51c3be4a7a573649d3b4768081f7f1  # v4.0.0
         with:
           resource-group: ${{ env.AKS_RG }}
           cluster-name: ${{ env.AKS_NAME }}
@@ -102,7 +102,7 @@ jobs:
       # Runs Helm to create manifest files
       - name: Configure deployment
         id: bake
-        uses: azure/k8s-bake@v3
+        uses: azure/k8s-bake@3830df6bcb94491766a22a7c61eac37a2a67b479  # v3.0.0
         with:
           renderEngine: 'helm'
           helmChart: ${{ env.CHART_PATH }}
@@ -113,7 +113,7 @@ jobs:
 
       # Deploys application based on manifest files from previous step
       - name: Deploys application
-        uses: Azure/k8s-deploy@v4
+        uses: Azure/k8s-deploy@d565a17533bbfa9b191d71bf9a8e3b8e613cce29 # v5.0.0
         with:
           resource-group: ${{ env.AKS_RG }}
           namespace: ${{ env.DEPLOY_NS }}
