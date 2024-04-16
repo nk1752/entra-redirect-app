@@ -11,10 +11,15 @@ jobs:
         run: |
           expr 3 + 7 > math-homework.txt
       - name: Upload math result for job 1
+        id: upload-artifact-1
         uses: actions/upload-artifact@v4
         with:
           name: homework1
           path: math-homework.txt
+      - name: display artifact id
+        run: |
+          echo ${{ steps.upload-artifact-1.outputs.artifact-id }}
+          echo ${{ steps.upload-artifact-1.outputs.artifact-url }}
 
   job_2:
     name: Multiply by 9
@@ -31,11 +36,16 @@ jobs:
           expr $value \* 9 > math-homework.txt
       - name: Upload math result for job 2
         uses: actions/upload-artifact@v4
+        id: upload-artifact-2
         with:
           name: homework2
           path: math-homework.txt
           # keep the artifact for 1 day
           retention-days: 2
+      - name: display artifact id
+        run: |
+          echo ${{ steps.upload-artifact-2.outputs.artifact-id }}
+          echo ${{ steps.upload-artifact-2.outputs.artifact-url }}
 
   job_3:
     name: Display results
