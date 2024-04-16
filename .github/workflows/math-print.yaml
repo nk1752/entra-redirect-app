@@ -5,9 +5,15 @@ on: workflow_dispatch
 jobs:
   job_3:
     name: Display results
+
+    permissions:
+      contents: read
+      actions: write
     
     runs-on: macOS-latest
+
     steps:
+
       - name: Download math result for job 2
         uses: actions/download-artifact@v3
         with:
