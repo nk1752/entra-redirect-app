@@ -1,14 +1,18 @@
-replicaCount: 1
+replicaCount: 2
 
-namespace: dev-ns
+namespace: entra-ns
 
-appName: claims
+appName: entra
 
+image:
+  name: entra
+  repository: vhacr.azurecr.io
+  pullPolicy: Always
+  tag: latest # 4cda6932965dfa1c0f1eb764358a7baf4d472d49
 
 configMap:
-  name: claims-config
+  name: entra-config
   data:
-    env: dev
     claims: |
       {
         "claims": [

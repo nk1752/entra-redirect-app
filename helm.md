@@ -6,7 +6,7 @@ choco install kubernetes-helm
 helm repo add <name> <url> <flags>
 
 # creates helm chart file structure
-helm create <chart-release-name> <chart-name> -n <namespace>
+helm create <chart-name>
 
 # install helm chart
 helm install <chart-release-name> <chart-name> -n <namespace>

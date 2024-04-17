@@ -1,0 +1,19 @@
+apiVersion: aln.networking.azure.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: backend-tls-policy
+  namespace: claims-chart
+spec:
+  targetRef:
+    group: ''
+    kind: Service
+    name: claims-chart
+    namespace: claims-chart
+  default:
+    sni: backend.com
+    ports:
+      - port: 443
+    clientCertificateRef:
+      name: client-certificate
+      namespace: claims-chart
+      group: ''

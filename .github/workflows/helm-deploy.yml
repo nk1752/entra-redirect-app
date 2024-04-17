@@ -18,13 +18,13 @@ env:
 
   AKS_RG: aks-rg
   AKS_NAME: aks
-  CONTAINER_NAME: claims
+  CONTAINER_NAME: entra
   CONTAINER_TAG: ${{ github.sha }}
-  DEPLOY_NS: helm-ns # set this to the name of your AKS cluster
+  DEPLOY_NS: entra-ns # set this to the name of your AKS cluster
 
   # If you bake using helm:
-  CHART_PATH: claims-chart # set this to the path to your helm file
-  CHART_OVERRIDE_PATH: claims-chart/values-dev.yaml # set this to an array of override file paths
+  CHART_PATH: entra-chart # set this to the path to your helm file
+  CHART_OVERRIDE_PATH: entra-chart/values-dev.yaml # set this to an array of override file paths
 
 
 jobs:
@@ -106,9 +106,7 @@ jobs:
         with:
           renderEngine: 'helm'
           helmChart: ${{ env.CHART_PATH }}
-          
-          overrides: |
-            replicas: 1
+          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
           helm-version: 'latest'
 
       # Deploys application based on manifest files from previous step
@@ -118,7 +116,7 @@ jobs:
           resource-group: ${{ env.AKS_RG }}
           namespace: ${{ env.DEPLOY_NS }}
           action: deploy
-          strategy: basic
+          strategy: basic # or blue-green or rolling (basic)
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}

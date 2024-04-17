@@ -27,10 +27,10 @@ spec:
         resources:
           requests:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "200m"
           limits:
               memory: "256Mi"
-              cpu: "1000m"
+              cpu: "400m"
         # setup probes
         livenessProbe:
           httpGet:
