@@ -20,7 +20,7 @@ spec:
       certificateRefs:
       - kind: Secret
         group: ""
-        name: tls-secret
+        name: {{ .Values.feCert.name }}
   addresses:
   - type: alb.networking.azure.io/alb-frontend
     value: fe-nk

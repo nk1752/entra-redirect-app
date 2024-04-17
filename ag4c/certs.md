@@ -19,6 +19,6 @@ sudo certbot certonly \
 openssl x509 -in certs/fullchain2.pem -noout -issuer
 
 # crete secret
-kubectl create secret tls fe-tls-secret -n ag4claims-ns --key certs/privkey2.pem --cert certs/fullchain2.pem
+kubectl create secret tls fe-tls-secret -n entra-ns --key certs/privkey2.pem --cert certs/fullchain2.pem
 kubectl create secret tls tls-secret -n helm-ns --key certs/privkey2.pem --cert certs/fullchain2.pem
   

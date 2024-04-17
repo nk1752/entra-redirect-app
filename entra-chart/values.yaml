@@ -4,6 +4,10 @@ namespace: entra-ns
 
 appName: entra
 
+feCert:
+  name: fe-tls-secret
+  namespace: entra-ns
+
 image:
   name: entra
   repository: vhacr.azurecr.io
