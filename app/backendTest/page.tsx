@@ -29,7 +29,7 @@ export default async function BackendPage() {
 
     const cca = new ConfidentialClientApplication(authConfig);
     const result = await cca.acquireTokenByClientCredential({
-      scopes: ['https://graph.microsoft.com/.default'],
+      scopes: ['api://26c696ca-aa6a-4802-955b-aff06d3fe111/.default'],
     });
 
     console.log(result);
@@ -54,11 +54,16 @@ export default async function BackendPage() {
     });
 
     if ((await response).ok) {
-      const time = (await response).text();
-      return time;
+      const msg = (await response).text();
+      time = (await msg).toString();
+      revalidatePath('/backendTest');
     } else {
-      return 'error';
+      time = 'error';
+      revalidatePath('/backendTest');
     }
+
+    revalidatePath('/backendTest');
+
   }
 
   return (
