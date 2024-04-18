@@ -5,6 +5,10 @@ import Topbar from '../components/topbar';
 import { User } from '../interfaces/User';
 import { ConfidentialClientApplication } from '@azure/msal-node';
 import { getSecret } from '@/utils/azKeyVault';
+import { setLogLevel } from '@azure/logger';
+import { logger } from '@azure/identity';
+
+setLogLevel('info');
 
 let time: string = '???';
 
@@ -32,16 +36,17 @@ export default async function BackendPage() {
       scopes: ['api://26c696ca-aa6a-4802-955b-aff06d3fe111/.default'],
     });
 
-    console.log(result);
+    logger.info(result);
 
     if (!result || !result.accessToken) {
       console.log('No token');
       return;
     }
 
-    const url = 'http://' + svcUrl + ':8080' + '/api/health';
+    // service-name.namespace.svc.cluster.local or service-name.namespace.svc or service-name.namespace
+    const url = 'http://claims-service.claims-ns:8080' + '/api/health';
 
-    console.log('getBeTime url >>>> ', url);
+    logger.info('getBeTime url >>>> ', url);
 
     const response = fetch(url, {
       method: 'GET',
