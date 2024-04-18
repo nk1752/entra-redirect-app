@@ -1,7 +1,7 @@
 'use server';
 export default async function getBeTime(accessToken: string, svcUrl: string) {
   //const url = 'http://localhost:8080/api/health';
-  const url = 'http://' + svcUrl + ':8080' + '/api/time';
+  const url = 'http://' + svcUrl + ':8080' + '/api/health';
 
   console.log('getBeTime url >>>> ', url);
 

@@ -39,7 +39,7 @@ export default async function BackendPage() {
       return;
     }
 
-    const url = 'http://' + svcUrl + ':8080' + '/api/time';
+    const url = 'http://' + svcUrl + ':8080' + '/api/health';
 
     console.log('getBeTime url >>>> ', url);
 

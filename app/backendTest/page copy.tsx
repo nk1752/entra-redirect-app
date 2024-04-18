@@ -9,7 +9,7 @@ import { useState } from 'react';
 export default function Page() {
   const { instance, accounts, inProgress } = useMsal();
   const [time, setTime] = useState('***');
-  const [svcUrl, setsvcUrl] = useState('claims-service.claims-ns.svc.cluster.local');
+  const [svcUrl, setsvcUrl] = useState('claims-service.claims-ns');
 
   async function getBackendToken() {
     console.log('getBackendToken >>>> ');
