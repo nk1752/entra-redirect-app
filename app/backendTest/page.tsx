@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function Page() {
   const { instance, accounts, inProgress } = useMsal();
   const [time, setTime] = useState('***');
+  const [svcUrl, setsvcUrl] = useState('claims-service.claims-ns.svc.cluster.local');
 
   async function getBackendToken() {
     console.log('getBackendToken >>>> ');
@@ -21,7 +22,7 @@ export default function Page() {
         const accessToken = response.accessToken;
         const idToken = response.idToken;
         console.log('accessToken for backend >>>> ', accessToken);
-        const res = getBeTime(accessToken)
+        const res = getBeTime(accessToken, svcUrl)
           .then((time) => {
             if (time) {
               console.log('time >>>> ', time);
@@ -51,6 +52,13 @@ export default function Page() {
         >
           <h3 className="text-2xl font-bold">Backend Time</h3>
           <p className="text-xl">{time}</p>
+          <input
+            className="border border-blue-500 w-96 h-7 bg-gray-700 text-stone-100 rounded-md"
+            type="text"
+            placeholder="URL"
+            value={svcUrl}
+            onChange={(e) => setsvcUrl(e.target.value)}
+          />
 
           <button
             className=" border border-blue-500 w-24 h-7 bg-gray-700 hover:bg-gray-800 text-stone-100 rounded-md"
