@@ -22,9 +22,6 @@ spec:
       containers:
       - name: {{ .Values.image.name }}
         image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
-      
-      nodeSelector:
-        type: user
         
         # setup resources
         resources:
@@ -54,6 +51,9 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ .Values.configMap.name }}
+    
+      nodeSelector:
+        type: user
         
           
           
