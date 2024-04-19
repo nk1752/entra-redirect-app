@@ -14,6 +14,9 @@ image:
   pullPolicy: Always
   tag: latest # 4cda6932965dfa1c0f1eb764358a7baf4d472d49
 
+nodeSelector:
+  name: usernodepool
+
 configMap:
   name: entra-config
   data:

@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-entra
+  namespace: claims-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: claims
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: entra-ns
+        - podSelector:
+            matchLabels:
+              app: entra
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: entra-ns
+        - podSelector:
+            matchLabels:
+              app: entra
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            

@@ -59,12 +59,11 @@ export default async function BackendPage() {
     });
 
     if ((await response).ok) {
-      const msg = (await response).text();
-      time = (await msg).toString();
-      revalidatePath('/backendTest');
+      time = (await response).text().toString();
+      //revalidatePath('/backendTest');
     } else {
       time = 'error';
-      revalidatePath('/backendTest');
+      //revalidatePath('/backendTest');
     }
 
     revalidatePath('/backendTest');
@@ -86,15 +85,9 @@ export default async function BackendPage() {
 
           <label className=" block">
             <span className="block text-sm font-medium text-stone-100">
-              AD Username
+              time from backend service
             </span>
-            <input
-              className=" bg-slate-200 hover:bg-slate-100 active:bg-white text-black focus:ring focus:ring-blue-500"
-              type="text"
-              name="svcUrl"
-              placeholder="Service DNS"
-              style={{ width: '100%' }}
-            />
+            
           </label>
 
           <button
