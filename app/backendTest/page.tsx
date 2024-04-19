@@ -59,11 +59,12 @@ export default async function BackendPage() {
     });
 
     if ((await response).ok) {
-      time = (await response).text().toString();
-      //revalidatePath('/backendTest');
+      const msg = (await response).text();
+      time = (await msg).toString();
+      revalidatePath('/backendTest');
     } else {
       time = 'error';
-      //revalidatePath('/backendTest');
+      revalidatePath('/backendTest');
     }
 
     revalidatePath('/backendTest');
