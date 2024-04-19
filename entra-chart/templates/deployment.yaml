@@ -7,8 +7,7 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
-  nodeSelector:
-    name: {{ .Values.nodeSelector.name }}
+  nodeName: {{ .Values.nodeSelector.name }}
   
   replicas: {{ .Values.replicaCount }}
   
