@@ -7,8 +7,10 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
+
   nodeSelector:
-    type: user
+    matchlabels:
+      type: user
   
   replicas: {{ .Values.replicaCount }}
   
